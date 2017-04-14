@@ -1,9 +1,9 @@
 package es.sinjava
 
 class Tarea {
-  String nombre
-    Date fecha
+	String nombre
+	Date fecha
 
-    static constraints = {
-    }
+	static constraints = {
+	}
 }

@@ -6,102 +6,116 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class WorkerController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static defaultAction= "create"
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Worker.list(params), model:[workerCount: Worker.count()]
-    }
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def show(Worker worker) {
-        respond worker
-    }
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond Worker.list(params), model:[workerCount: Worker.count()]
+	}
 
-    def create() {
-        respond new Worker(params)
-    }
+	def show(Worker worker) {
+		respond worker
+	}
 
-    @Transactional
-    def save(Worker worker) {
-        if (worker == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+	def create() {
+		respond new Worker(params)
+	}
 
-        if (worker.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond worker.errors, view:'create'
-            return
-        }
+	@Transactional
+	def save(Worker worker) {
+		if (worker == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        worker.save flush:true
+		if (worker.hasErrors()) {
+			transactionStatus.setRollbackOnly()
+			respond worker.errors, view:'create'
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'worker.label', default: 'Worker'), worker.id])
-                redirect worker
-            }
-            '*' { respond worker, [status: CREATED] }
-        }
-    }
+		worker.save flush:true
 
-    def edit(Worker worker) {
-        respond worker
-    }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.created.message', args: [
+					message(code: 'worker.label', default: 'Worker'),
+					worker.name
+				])
+				redirect worker
+			}
+			'*' { respond worker, [status: CREATED] }
+		}
+	}
 
-    @Transactional
-    def update(Worker worker) {
-        if (worker == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+	def edit(Worker worker) {
+		respond worker
+	}
 
-        if (worker.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond worker.errors, view:'edit'
-            return
-        }
+	@Transactional
+	def update(Worker worker) {
+		if (worker == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        worker.save flush:true
+		if (worker.hasErrors()) {
+			transactionStatus.setRollbackOnly()
+			respond worker.errors, view:'edit'
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'worker.label', default: 'Worker'), worker.id])
-                redirect worker
-            }
-            '*'{ respond worker, [status: OK] }
-        }
-    }
+		worker.save flush:true
 
-    @Transactional
-    def delete(Worker worker) {
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.updated.message', args: [
+					message(code: 'worker.label', default: 'Worker'),
+					worker.id
+				])
+				redirect worker
+			}
+			'*'{ respond worker, [status: OK] }
+		}
+	}
 
-        if (worker == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+	@Transactional
+	def delete(Worker worker) {
 
-        worker.delete flush:true
+		if (worker == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'worker.label', default: 'Worker'), worker.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		worker.delete flush:true
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'worker.label', default: 'Worker'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.deleted.message', args: [
+					message(code: 'worker.label', default: 'Worker'),
+					worker.id
+				])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
+
+	protected void notFound() {
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.not.found.message', args: [
+					message(code: 'worker.label', default: 'Worker'),
+					params.id
+				])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 }

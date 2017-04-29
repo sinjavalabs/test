@@ -44,7 +44,7 @@ pre {
 
 }
 .navbar-default, .navbar-static-top {
-    background-color: #4D8618;
+    background-color: #0000a0;
     border: 0px;
 }
 a.navbar-brand {
@@ -95,7 +95,7 @@ a.navbar-brand {
     padding: 0px 50px 0px 50px;
     top: 40px;
     right: -60px;
-    background-color: #a60000;
+    background-color: #8080ff;
     color: #ffffff;
     font-size: 1em;
     z-index: 100;
@@ -113,7 +113,7 @@ a.navbar-brand {
 
 #band {
     /*grey =#808080*/
-    background: #79B94C  no-repeat 50% 30%;
+    background: #000080 no-repeat 50% 30%;
     height: 400px;
 }
 
@@ -290,7 +290,7 @@ article .content time {
 }
 
 .anchor-link:hover:before {
-    color: orange;
+    color: navy;
 }
 
 code, kbd, pre, samp {
@@ -335,8 +335,8 @@ code, kbd, pre, samp {
 }
 
 #big-download-button:hover {
-    background-color: #e6e6e6;
-    color: #db4800;
+    background-color: navy;
+    color: #8080ff;
 }
 
 .colset-3-footer .col-1, .colset-3-footer .col-2, .colset-3-footer .col-3 {
@@ -386,7 +386,7 @@ a {
 }
 
 a:hover {
-    color: #db4800;
+    color: #0080ff;
     text-decoration: none
 }
 
@@ -781,7 +781,7 @@ ul.nav-sidebar {
     list-style-type: none
 }
 
-ul.nav-sidebar li a {
+ul.nav-sidebar li a { 
     display: block;
     cursor: pointer;
     padding: 5px 10px;

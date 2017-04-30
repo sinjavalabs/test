@@ -12,6 +12,6 @@ class Worker {
 	static constraints = {
 		name(blank:false , maxSize:10)
 		password(blank:false, maxSize:10)
-		email(blank:true)
+		email(email:true, blank:true)
 	}
 }
